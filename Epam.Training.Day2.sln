@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDCalculation", "LCMCalcul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDCalculation.Tests", "LCMCalculation.Tests\GCDCalculation.Tests.csproj", "{62F1CB2E-7F79-431B-A0D1-0581A5D52B9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerFormatting.Tests", "CustomerFormatting.Tests\CustomerFormatting.Tests.csproj", "{5FAA523E-6FB7-4767-8F2B-C332029BF002}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{62F1CB2E-7F79-431B-A0D1-0581A5D52B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62F1CB2E-7F79-431B-A0D1-0581A5D52B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62F1CB2E-7F79-431B-A0D1-0581A5D52B9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAA523E-6FB7-4767-8F2B-C332029BF002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAA523E-6FB7-4767-8F2B-C332029BF002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAA523E-6FB7-4767-8F2B-C332029BF002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAA523E-6FB7-4767-8F2B-C332029BF002}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

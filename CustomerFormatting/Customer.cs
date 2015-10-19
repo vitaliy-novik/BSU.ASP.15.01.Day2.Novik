@@ -29,11 +29,13 @@ namespace CustomerFormatting
             get { return contactPhone; }
             set
             {
-                Regex r = new Regex(@"^\+\d{1,3} ?\(\d{2,3}\) ?\d{3}-\d{4}$");
+                Regex r = new Regex(@"^\+?\d{1,3} ?\(\d{2,3}\) ?\d{3}-\d{4}$");
                 if (!r.IsMatch(value))
                     throw new ArgumentException();
                 else
                 {
+                    if (value[0] != '+')
+                        value = value.Insert(0, "+");
                     int index = value.IndexOf('(');
                     if (value[index - 1] != ' ')
                         value = value.Insert(index, " ");
