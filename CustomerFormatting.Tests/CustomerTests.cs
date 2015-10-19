@@ -17,5 +17,14 @@ namespace CustomerFormatting.Tests
             c.ContactPhone = phone;
             return (c.ContactPhone);
         }
+
+        [TestCase("James Willis O'Donel-Brown", Result = "James Willis O'Donel-Brown")]
+        [TestCase("Dan.Jones", ExpectedException = typeof(ArgumentException))]
+        public string NameTest(string name)
+        {
+            Customer c = new Customer();
+            c.Name = name;
+            return (c.Name);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,13 @@ namespace GCDCalculation
     {
         public static int EuclideanAlgorithm(int a, int b, out long time)
         {
-            time = DateTimeOffset.Now.Ticks;
+            time = 0;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            a = Math.Abs(a);
+            b = Math.Abs(b);
             if (a == 0 || b == 0)
-                return Math.Max(Math.Abs(a), Math.Abs(b));
+                return Math.Max(a, b);
             int r=1;
             if (b > a) { r = a; a = b; b = r; }
             while(r != 0)
@@ -21,7 +26,8 @@ namespace GCDCalculation
                 a = b;
                 b = r;
             }
-            time = DateTimeOffset.Now.Ticks - time;
+            sw.Stop();
+            time = sw.ElapsedTicks;
             return a;
         }
 
@@ -37,24 +43,31 @@ namespace GCDCalculation
         public static int EuclideanAlgorithm(out long time, params int[] numbers)
         {
             time = 0;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            long rtime;
             if (numbers == null || numbers.Length == 0)
                 throw new ArgumentException();
             if (numbers.Length == 1)
                 return numbers[0];
-            int result = EuclideanAlgorithm(numbers[0], numbers[1], out time);
-            long rtime;
+            int result = EuclideanAlgorithm(numbers[0], numbers[1], out rtime);
             for (int i = 2; i < numbers.Length; ++i)
             {
                 result = EuclideanAlgorithm(numbers[i], result, out rtime);
-                time += rtime;
             }
+            sw.Stop();
+            time = sw.ElapsedTicks;
             return result;
         }
 
         public static int BinaryAlgorithm(int a, int b, out long time)
         {
-            time = DateTimeOffset.Now.Ticks;
-            int result = 1;            
+            time = 0;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            int result = 1;
+            a = Math.Abs(a);
+            b = Math.Abs(b);
             while (true)
             {
                 if (a == 0) { result *= b; break; };
@@ -77,7 +90,8 @@ namespace GCDCalculation
                 int t = a; a = b; 
                 b = Math.Abs(t - b);
             }
-            time = DateTimeOffset.Now.Ticks - time;
+            sw.Stop();
+            time = sw.ElapsedTicks;
             return result;
         }
 
@@ -93,17 +107,20 @@ namespace GCDCalculation
         public static int BinaryAlgorithm(out long time, params int[] numbers)
         {
             time = 0;
+            Stopwatch sw = new Stopwatch();
+            long rtime;
+            sw.Start();
             if (numbers == null || numbers.Length == 0)
                 throw new ArgumentException();
             if (numbers.Length == 1)
                 return numbers[0];
-            int result = BinaryAlgorithm(numbers[0], numbers[1], out time);
-            long rtime;
+            int result = BinaryAlgorithm(numbers[0], numbers[1], out rtime);
             for (int i = 2; i < numbers.Length; ++i)
             {
                 result = BinaryAlgorithm(numbers[i], result, out rtime);
-                time += rtime;
             }
+            sw.Stop();
+            time = sw.ElapsedTicks;
             return result;
         }
     }
