@@ -9,7 +9,29 @@ namespace GCDCalculation
 {
     public static class GCD
     {
-        public static int EuclideanAlgorithm(int a, int b, out long time)
+        delegate int Algorithm(out long time, int a, int b);
+
+        public static int EuclideanAlgorithm(out long time, int a, int b, int c)
+        {
+            return GCDThreeNumbers(new Algorithm(EuclideanAlgorithm), out time, a, b, c);
+        }
+
+        public static int BinaryAlgorithm(out long time, int a, int b, int c)
+        {
+            return GCDThreeNumbers(new Algorithm(BinaryAlgorithm), out time, a, b, c);
+        }
+
+        public static int EuclideanAlgorithm(out long time, params int[] numbers)
+        {
+            return GCDParamsAlgorithm(new Algorithm(EuclideanAlgorithm), out time, numbers);
+        }
+
+        public static int BinaryAlgorithm(out long time, params int[] numbers)
+        {
+            return GCDParamsAlgorithm(new Algorithm(BinaryAlgorithm), out time, numbers);
+        }
+
+        public static int EuclideanAlgorithm(out long time, int a, int b)
         {
             time = 0;
             Stopwatch sw = new Stopwatch();
@@ -18,9 +40,9 @@ namespace GCDCalculation
             b = Math.Abs(b);
             if (a == 0 || b == 0)
                 return Math.Max(a, b);
-            int r=1;
+            int r = 1;
             if (b > a) { r = a; a = b; b = r; }
-            while(r != 0)
+            while (r != 0)
             {
                 r = a % b;
                 a = b;
@@ -31,36 +53,7 @@ namespace GCDCalculation
             return a;
         }
 
-        public static int EuclideanAlgorithm(int a, int b, int c, out long time)
-        {
-            long rtime;
-            int r = EuclideanAlgorithm(a, b, out time);
-            r = EuclideanAlgorithm(r, c, out rtime);
-            time += rtime;
-            return r;
-        }
-
-        public static int EuclideanAlgorithm(out long time, params int[] numbers)
-        {
-            time = 0;
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            long rtime;
-            if (numbers == null || numbers.Length == 0)
-                throw new ArgumentException();
-            if (numbers.Length == 1)
-                return numbers[0];
-            int result = EuclideanAlgorithm(numbers[0], numbers[1], out rtime);
-            for (int i = 2; i < numbers.Length; ++i)
-            {
-                result = EuclideanAlgorithm(numbers[i], result, out rtime);
-            }
-            sw.Stop();
-            time = sw.ElapsedTicks;
-            return result;
-        }
-
-        public static int BinaryAlgorithm(int a, int b, out long time)
+        public static int BinaryAlgorithm(out long time, int a, int b)
         {
             time = 0;
             Stopwatch sw = new Stopwatch();
@@ -95,33 +88,30 @@ namespace GCDCalculation
             return result;
         }
 
-        public static int BinaryAlgorithm(int a, int b, int c, out long time)
+        private static int GCDThreeNumbers(Algorithm algorithm, out long time, int a, int b, int c)
         {
             long rtime;
-            int r = BinaryAlgorithm(a, b, out time);
-            r = BinaryAlgorithm(r, c, out rtime);
+            int r = algorithm(out time, a, b);
+            r = algorithm(out rtime, r, c);
             time += rtime;
             return r;
         }
 
-        public static int BinaryAlgorithm(out long time, params int[] numbers)
+        private static int GCDParamsAlgorithm(Algorithm algorithm, out long time, params int[] numbers)
         {
             time = 0;
-            Stopwatch sw = new Stopwatch();
             long rtime;
-            sw.Start();
             if (numbers == null || numbers.Length == 0)
                 throw new ArgumentException();
-            if (numbers.Length == 1)
-                return numbers[0];
-            int result = BinaryAlgorithm(numbers[0], numbers[1], out rtime);
+            int result = algorithm(out rtime, numbers[0], numbers[1]);
+            time += rtime;
             for (int i = 2; i < numbers.Length; ++i)
             {
-                result = BinaryAlgorithm(numbers[i], result, out rtime);
+                result = algorithm(out rtime, numbers[i], result);
+                time += rtime;
             }
-            sw.Stop();
-            time = sw.ElapsedTicks;
             return result;
         }
+        
     }
 }

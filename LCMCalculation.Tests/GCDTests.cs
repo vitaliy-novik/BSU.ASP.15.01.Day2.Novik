@@ -13,7 +13,7 @@ namespace LCMCalculation.Tests
         public int EuclideanAlgorithmTest(int a, int b)
         {
             long t;
-            return (GCD.EuclideanAlgorithm(a, b, out t));
+            return (GCD.EuclideanAlgorithm(out t, a, b));
         }
 
         [TestCase(3, 5, Result = 1)]
@@ -23,7 +23,7 @@ namespace LCMCalculation.Tests
         public int BinaryAlgorithmTest(int a, int b)
         {
             long t;
-            return (GCD.BinaryAlgorithm(a, b, out t));
+            return (GCD.BinaryAlgorithm(out t, a, b));
         }
     }
 
